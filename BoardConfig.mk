@@ -16,6 +16,9 @@
 
 include device/lge/g2-common/BoardConfigCommon.mk
 
+# create the folder /usr to prevent the build from failing
+$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+
 TARGET_KERNEL_CONFIG := ls980_defconfig
 
 TARGET_OTA_ASSERT_DEVICE := ls980,g2,galbi

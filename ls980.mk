@@ -1,5 +1,5 @@
 #
-# Copyright 2012 The Android Open Source Project
+# Copyright 2013 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +17,19 @@
 # Sample: This is where we'd set a backup provider if we had one
 # $(call inherit-product, device/sample/products/backup_overlay.mk)
 
+$(call inherit-product-if-exists, vendor/lge/galbi/galbi-ls980-vendor.mk)
+$(call inherit-product, device/lge/g2-common/g2.mk)
+
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-PRODUCT_DEVICE := ls980
-PRODUCT_NAME := full_ls980
-PRODUCT_BRAND := LGE
-PRODUCT_MODEL := LG-LS980
-PRODUCT_MANUFACTURER := lge
-PRODUCT_RESTRICT_VENDOR_FILES := false
+## overlays
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-# Inherit from hardware-specific part of the product configuration
-$(call inherit-product, device/lge/ls980/device.mk)
+PRODUCT_PROPERTY_OVERRIDES += \
+        telephony.lteOnCdmaDevice=1 \
+        ro.telephony.default_network=8 \
+        ro.cdma.home.operator.numeric=310120 \
+        ro.cdma.home.operator.alpha=Sprint \
+        ro.cdma.homesystem=64,65,76,77,78,79,80,81,82,83
+
